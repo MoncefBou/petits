@@ -3,6 +3,7 @@ import './App.css'
 import Circle from "./components/Circle.jsx"
 import Winner from "./components/Winner";
 import Container from "./components/Container";
+import NumeroDee from "./components/NumeroDee";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -109,7 +110,9 @@ class App extends React.Component {
   renderVictory() {
     if (this.state.player1Tokens.indexOf(false) === -1 || this.state.player2Tokens.indexOf(false) === -1) {
       return (
-        <Winner className={this.state.currentPlayer === 2 ? "spanP1" : "spanP2"} >{this.state.currentPlayer === 2 ? "Player 1" : "Player 2"}</Winner>
+        <Winner className={this.state.currentPlayer === 2 ? "spanP1" : "spanP2"} >
+          {this.state.currentPlayer === 2 ? "Player 1" : "Player 2"}
+        </Winner>
       )
     } else {
       return (
@@ -134,19 +137,23 @@ class App extends React.Component {
 
                 <div className="flex grid-item-5">
 
-                  <Container containerName="containerP1" childName="divchildP1" player={this.state.player1Tokens} color="#4646e8" />
-                  <Container containerName="containerP2" childName="divchildP2" player={this.state.player2Tokens} color="#c30c0c" />
-              
-                  <div className="numeroDee">
+                  <Container
+                    containerName="containerP1"
+                    childName="divchildP1"
+                    player={this.state.player1Tokens}
+                    color="#4646e8" />
 
+                  <Container
+                    containerName="containerP2"
+                    childName="divchildP2"
+                    player={this.state.player2Tokens}
+                    color="#c30c0c" />
 
-                    <span className="spanP1">{this.state.numDee}</span>
-                    <i className="fas fa-chess-knight logo "></i>
-
-                    <span className="spanP2">{this.state.numDee2}</span>
-                    <p className="rainbow">Petit Chevaux</p>
-                    <button className={this.state.currentPlayer === 1 ? "b1" : "b2"} onClick={this.lancerDee}>Tirer dée du joueur {this.state.currentPlayer}</button>
-                  </div>
+                  <NumeroDee
+                    player={this.state.currentPlayer}
+                    numDee={this.state.numDee}
+                    numDee2={this.state.numDee2}
+                    lancerDee={this.lancerDee} />
 
                 </div>
 
