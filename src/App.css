@@ -145,15 +145,6 @@ p {
     padding-top: 35px;
 }
 
-.spanP1{
-    color: #4480ec;
-}
-
-
-.spanP2{
-    color: #ec4444;
-}
-
 .grid-game {
     display: grid;
     grid-template-columns: 80px auto 80px;
