@@ -98,10 +98,13 @@ class App extends React.Component {
     // Cette boucle permet de colorié le bon cercle où se trouve chaque joueur et le reste en noir
     for (let index = n; index <= p; index++) {
 
-      if (this.state.numCase[1] === index) {
+    
+      if (this.state.numCase[1] === index && this.state.numCase[0] !== index) {
         circlesArray.push(<Circle key={index} circleColor="#ec4444" />)
-      } else if (this.state.numCase[0] === index) {
+      } else if (this.state.numCase[0] === index && this.state.numCase[1] !== index) {
         circlesArray.push(<Circle key={index} circleColor="#4480ec" />)
+      } else if (this.state.numCase[0] === index && this.state.numCase[1] === index ) {
+        circlesArray.push(<Circle key={index} circleColor="linear-gradient(#4480ec 50%, #ec4444 50%)" />)
       } else {
         circlesArray.push(<Circle key={index} circleColor="black" />)
       }

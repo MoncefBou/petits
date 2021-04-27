@@ -39,10 +39,6 @@ i {
 }
 
 #col2 {
-    /* display: grid;
-    grid-template-columns: 1fr;
-    grid-row: 1fr 1fr 1fr 1fr 1fr 1fr; */
-
     display: flex;
     flex-direction: column;
 }
