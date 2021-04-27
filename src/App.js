@@ -144,6 +144,69 @@ class App extends React.Component {
     return circlesArray
   }
 
+  renderBoard() {
+
+    return (
+      <div className=" bg-g">
+        <div className="offset-2 py-4">
+          <div id="jeu">
+
+            <div className="grid-game">
+
+              {this.renderCircles(1, 1)}
+
+              <div className="flex">
+                {this.renderCircles(2, 9)}
+              </div>
+
+              {this.renderCircles(10, 10)}
+
+              <div className="flex grid-item-4">
+                {this.renderCircles(29, 36)}
+              </div>
+
+              <div className="flex grid-item-5">
+
+                <Container
+                  containerName="containerP1"
+                  childName="divchildP1"
+                  player={this.state.player1Tokens}
+                  color="#4646e8" />
+
+                <Container
+                  containerName="containerP2"
+                  childName="divchildP2"
+                  player={this.state.player2Tokens}
+                  color="#c30c0c" />
+
+                <NumeroDee
+                  player={this.state.currentPlayer}
+                  numDee={this.state.numDee[0]}
+                  numDee2={this.state.numDee[1]}
+                  lancerDee={this.lancerDee} />
+
+              </div>
+
+              <div className="flex grid-item-6">
+                {this.renderCircles(11, 18)}
+              </div>
+
+              {this.renderCircles(28, 28)}
+
+              <div className="flex grid-item-8">
+                {this.renderCircles(20, 27)}
+              </div>
+
+              {this.renderCircles(19, 19)}
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   renderVictory() {
     // Si il ne reste plus de pion dans la base d'un des 2 joueurs alors on active le render conditionnel de V.
     if (this.state.player1Tokens.indexOf(false) === -1 || this.state.player2Tokens.indexOf(false) === -1) {
@@ -153,66 +216,10 @@ class App extends React.Component {
         </Winner>
       )
     } else {
-      return (
-
-        <div className=" bg-g">
-          <div className="offset-2 py-4">
-            <div id="jeu">
-
-              <div className="grid-game">
-
-                {this.renderCircles(1, 1)}
-
-                <div className="flex">
-                  {this.renderCircles(2, 9)}
-                </div>
-
-                {this.renderCircles(10, 10)}
-
-                <div className="flex grid-item-4">
-                  {this.renderCircles(29, 36)}
-                </div>
-
-                <div className="flex grid-item-5">
-
-                  <Container
-                    containerName="containerP1"
-                    childName="divchildP1"
-                    player={this.state.player1Tokens}
-                    color="#4646e8" />
-
-                  <Container
-                    containerName="containerP2"
-                    childName="divchildP2"
-                    player={this.state.player2Tokens}
-                    color="#c30c0c" />
-
-                  <NumeroDee
-                    player={this.state.currentPlayer}
-                    numDee={this.state.numDee[0]}
-                    numDee2={this.state.numDee[1]}
-                    lancerDee={this.lancerDee} />
-
-                </div>
-
-                <div className="flex grid-item-6">
-                  {this.renderCircles(11, 18)}
-                </div>
-
-                {this.renderCircles(28, 28)}
-
-                <div className="flex grid-item-8">
-                  {this.renderCircles(20, 27)}
-                </div>
-
-                {this.renderCircles(19, 19)}
-
-              </div>
-
-            </div>
-          </div>
-        </div>
+      return(
+        <div>{this.renderBoard()}</div>
       )
+      
     }
   }
 
