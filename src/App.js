@@ -13,10 +13,8 @@ class App extends React.Component {
 
     this.state = {
 
-      numDee: 0,
-      numDee2: 0,
-      numCase: 0,
-      numCase2: 0,
+      numDee: [0, 0],
+      numCase: [0, 0],
       player1Tokens: [false, false, false, false],
       player2Tokens: [false, false, false, false],
       currentPlayer: 1
@@ -29,37 +27,63 @@ class App extends React.Component {
 
 
   lancerDee() {
+    // dee génére un chiffre entre 1 et 6 au hasard
     const dee = Math.floor(Math.random() * 6 + 1)
-
+// Ici on sait c'est au tour de quel joueur
     const player = this.state.currentPlayer
-
+// Si c'est le joueur 1
     if (player === 1) {
+// Si le lancé vaut 6 ou si le joueur est à une case différente de 0
+// ça permet de ne paser commencer temps que le joueur n'a pas fait 6 au départ
+      if (this.state.numCase[0] !== 0 || dee === 6) {
+        
+        const newNumDee = this.state.numDee
+        const newNumCase = this.state.numCase
+        
+        newNumDee[0] = dee
+        newNumCase[0] = newNumCase[0] + dee;
 
-      if (this.state.numCase !== 0 || dee === 6) {
+
+        
         this.setState({
-          numDee: dee,
-          numCase: this.state.numCase + dee,
+          numDee: newNumDee,
+          numCase: newNumCase,
           currentPlayer: 2
         })
       } else {
+        const newNumDee = this.state.numDee
+        
+        newNumDee[0] = dee
+        
         this.setState({
-          numDee: dee,
+          numDee: newNumDee,
           currentPlayer: 2
         })
       }
 
-
+// Si c'est le joueur 2
     } else if (player === 2) {
-
-      if (this.state.numCase2 !== 0 || dee === 6) {
+// Pareil qu'en haut.
+      if (this.state.numCase[1] !== 0 || dee === 6) {
+        
+        const newNumDee = this.state.numDee
+        const newNumCase = this.state.numCase
+        
+        newNumDee[1] = dee
+        newNumCase[1] = newNumCase[1] + dee;
+        
         this.setState({
-          numDee2: dee,
-          numCase2: this.state.numCase2 + dee,
+          numDee: newNumDee,
+          numCase2: newNumCase,
           currentPlayer: 1
         })
       } else {
+        const newNumDee = this.state.numDee
+        
+        newNumDee[1] = dee
+        
         this.setState({
-          numDee2: dee,
+          numDee: newNumDee,
           currentPlayer: 1
         })
       }
@@ -67,38 +91,51 @@ class App extends React.Component {
     }
   }
 
+  // Cette méthode permet de générer les cercles et de les colorer en rouge, bleu ou noir
   renderCircles(n, p) {
     let circlesArray = []
 
+    // Cette boucle permet de colorié le bon cercle où se trouve chaque joueur et le reste en noir
     for (let index = n; index <= p; index++) {
 
-      if (this.state.numCase2 === index) {
+      if (this.state.numCase[1] === index) {
         circlesArray.push(<Circle key={index} circleColor="#ec4444" />)
-      } else if (this.state.numCase === index) {
+      } else if (this.state.numCase[0] === index) {
         circlesArray.push(<Circle key={index} circleColor="#4480ec" />)
       } else {
         circlesArray.push(<Circle key={index} circleColor="black" />)
       }
 
-      if (this.state.numCase > 37) {
+    // Si le joueurs a dépassé la case 37 alors on change un élément de playerTokens en true
+    // ensuite on vérifie si il y a encore un false dans playerTokens, si il en reste alors
+    // cela veut dire qu'il reste au moins un pions dans sa base donc le jeu continue
+    // avec un pion qu'on place à la case 1. Si il n'y a plus de false, 
+    // le render conditionnel de victoire s'active.
+      if (this.state.numCase[0] > 37) {
         const arrayTokens = [...this.state.player1Tokens]
         const indexFirstFalse = arrayTokens.indexOf(false)
+        const newNumCase = this.state.numCase
 
         arrayTokens[indexFirstFalse] = true
+        newNumCase[0] = 1;
 
         this.setState({
 
-          numCase: 1,
+          numCase: newNumCase,
           player1Tokens: arrayTokens
         })
-      } else if (this.state.numCase2 > 37) {
+      } else if (this.state.numCase[1] > 37) {
+        
         const arrayTokens2 = [...this.state.player2Tokens]
         const indexSecondFalse = arrayTokens2.indexOf(false)
+        const newNumCase = this.state.numCase
 
         arrayTokens2[indexSecondFalse] = true
+        newNumCase[1] = 1;
 
         this.setState({
-          numCase2: 1,
+
+          numCase: newNumCase,
           player2Tokens: arrayTokens2
 
         })
@@ -108,6 +145,7 @@ class App extends React.Component {
   }
 
   renderVictory() {
+    // Si il ne reste plus de pion dans la base d'un des 2 joueurs alors on active le render conditionnel de V.
     if (this.state.player1Tokens.indexOf(false) === -1 || this.state.player2Tokens.indexOf(false) === -1) {
       return (
         <Winner className={this.state.currentPlayer === 2 ? "spanP1" : "spanP2"} >
@@ -151,8 +189,8 @@ class App extends React.Component {
 
                   <NumeroDee
                     player={this.state.currentPlayer}
-                    numDee={this.state.numDee}
-                    numDee2={this.state.numDee2}
+                    numDee={this.state.numDee[0]}
+                    numDee2={this.state.numDee[1]}
                     lancerDee={this.lancerDee} />
 
                 </div>
