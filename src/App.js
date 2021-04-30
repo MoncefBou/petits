@@ -151,7 +151,7 @@ class App extends React.Component {
 
     return (
       <div className=" bg-g">
-        <div className="offset-2 py-4">
+        <div className="d-flex align-items-center py-4">
           <div id="jeu">
 
             <div className="grid-game">
@@ -182,12 +182,6 @@ class App extends React.Component {
                   player={this.state.player2Tokens}
                   color="#c30c0c" />
 
-                <NumeroDee
-                  player={this.state.currentPlayer}
-                  numDee={this.state.numDee[0]}
-                  numDee2={this.state.numDee[1]}
-                  lancerDee={this.lancerDee} />
-
               </div>
 
               <div className="flex grid-item-6">
@@ -205,6 +199,13 @@ class App extends React.Component {
             </div>
 
           </div>
+          
+          <NumeroDee
+                  player={this.state.currentPlayer}
+                  numDee={this.state.numDee[0]}
+                  numDee2={this.state.numDee[1]}
+                  lancerDee={this.lancerDee} />
+
         </div>
       </div>
     )
